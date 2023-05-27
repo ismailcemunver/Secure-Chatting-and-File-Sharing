@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #ffffcc;
+}
+
+#chat-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 10px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  justify-content: center;
+}
+
+#messages {
+  overflow-y: auto;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.message {
+  margin-bottom: 10px;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #eaeaea;
+}
+
+.message-me {
+  text-align: right;
+  background-color: #6c9cff;
+  color: #fff;
+}
+
+#messagetext {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px;
+  margin-right: 20px;
+  background: linear-gradient(to right, #6c9cff, #a55aff);
+  padding: 10px;
+  animation: borderFade 2s infinite alternate;
+  border-radius: 20px;
+}
+
+#messages {
+  flex-grow: 1;
+  overflow-y: scroll;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#messages::-webkit-scrollbar {
+  display: none;
+}
+@keyframes borderFade {
+  0% {
+    border: 2px solid #6c9cff;
+  }
+  100% {
+    border: 2px solid #a55aff;
+  }
+}
+.message-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: Arial, sans-serif;
+}
+
+.message-input {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.message-input input[type="text"] {
+  flex-grow: 1;
+  margin-right: 10px;
+  width: 80%;
+  font-family: Arial, sans-serif;
+}
+
+.file-input {
+  display: flex;
+  align-items: flex-start;
+  font-family: Arial, sans-serif;
+}
+
+.file-input input[type="file"] {
+  margin-right: 10px;
+}
+.message-form input[type="submit"],
+.file-input input[type="file"] {
+  font-family: Arial, sans-serif;
+}
+#file-picker {
+  font-family: Arial, sans-serif;
+}
+.btn {
+  font-family: Arial, sans-serif;
+  background-color: #ffffcc;
+  border-radius: 20px;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.message-input input[type="text"] {
+  flex-grow: 1;
+  margin-right: 10px;
+  width: 80%;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s, border 0.3s;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.message-input input[type="text"]:focus {
+  background-color: #fff;
+  border-color: #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}

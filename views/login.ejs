@@ -1,0 +1,30 @@
+<%- include('includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/login.css" />
+  </head>
+  <body>
+    <% if (successMessage){ %>
+      <p>
+        <%=successMessage%>
+      </p>
+    <% } %>
+    <% if (errorMessage){ %>
+      <p>
+        <%=errorMessage%>
+      </p>
+    <% } %>
+    <form action="/loginsubmit" method="post">
+      <div class="container">
+        <h2>Login Form</h2>
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required />
+        <label for="psw"><b>Password</b></label>
+        <input
+          type="password"
+          placeholder="Enter Password"
+          name="psw"
+          required
+        />
+        <button type="submit">Login</button>
+      </div>
+    </form>
+    <%- include('includes/end.ejs') %>

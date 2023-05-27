@@ -1,0 +1,40 @@
+<%- include('includes/head.ejs') %>
+<link rel="stylesheet" href="/css/creategroup.css" />
+
+</head>
+<body>
+  <div class="container">
+    <h2>Create Group</h2>
+    <% if (successMessage){ %>
+      <p class="success">
+        <%=successMessage%>
+      </p>
+    <% } %>
+    <% if (errorMessage){ %>
+      <p class="error">
+        <%=errorMessage%>
+      </p>
+    <% } %>
+    <form action="/chats/submitgroup" method="post" class="forms">
+      <div class="form-group groupname">
+        <label for="groupname">Group Name:</label>
+        <input type="text" id="groupname" name="groupName">
+      </div>
+      <div class="form-group friends">
+        <label>Friends:</label>
+        <div class="checkbox-container">
+          <% for(let i=0; i < friendArray.length; i++) { %>
+          <div class="checkbox-item">
+            <input type="checkbox" name="friend" class="checkedUsers" value="<%= friendArray[i].receiverUser.username %>">
+            <span><%= friendArray[i].receiverUser.username %></span>
+          </div>
+          <% } %>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="submit" class="button linktext forward" value="Create Group">
+      </div>
+    </form>
+  </div>
+<%- include('includes/end.ejs') %>
+</body>

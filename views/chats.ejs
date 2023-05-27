@@ -1,0 +1,60 @@
+<%- include('includes/head.ejs') %>
+<link rel="stylesheet" href="/css/chats.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="headers">
+    <h2>Chat Messages of <%=getUsername.username%></h2>
+    <% if (successMessage){ %>
+    <p>
+      <%=successMessage%>
+    </p>
+    <% } %>
+    <% if (errorMessage){ %>
+    <p>
+      <%=errorMessage%>
+    </p>
+    <% } %>
+  </div>
+  <div class="container">
+    <div class="search">
+      <form action="/adduser" method="post">
+        <input type="text" placeholder=" Add User" name="friendUsername">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+    <div>
+      <h3 class="headers">Friends</h3>
+      <% for(let i=0; i < friendList.length; i++) { %>
+      <p><a href="/chats/users/<%= friendList[i].receiver %>" target="_blank" class="linktext chatforward" style="opacity: 0;"><%= friendList[i].receiverUser.username %></a></p>
+      <% } %>
+      <br>
+    </div>
+    <div>
+      <h3 class="headers">Groups</h3>
+      <% for(let i=0; i < userGroups.length; i++) { %>
+      <p><a href="/chats/groups/<%= userGroups[i].groupid %>" target="_blank" class="linktext chatforward" style="opacity: 0;"><%= userGroups[i].groups.title %></a></p>
+      <% } %>
+    </div>
+    <div>
+      <a href="/chats/creategroup" class="forward linktext" target="_blank" style="opacity: 0;">Create Group</a>
+    </div>
+  </div>
+
+  <%- include('includes/end.ejs') %>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.linktext.chatforward').each(function(index) {
+        $(this).delay(200 * index).animate({ opacity: 1 }, 500);
+      });
+      $('.linktext.chatforward').each(function(index) {
+        $(this).delay(200 * index).animate({ opacity: 1 }, 500);
+      });
+      $('.forward.linktext').delay(400).animate({ opacity: 1 }, 500);
+    });
+  </script>
+</body>
+</html>

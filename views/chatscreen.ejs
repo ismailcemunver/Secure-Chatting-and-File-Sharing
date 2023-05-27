@@ -1,0 +1,95 @@
+<%- include('includes/head.ejs') %>
+<link rel="stylesheet" href="/css/chatscreen.css">
+</head>
+
+<body>
+  <div id="chat-container" class="container">
+    <ul id="messages">
+    </ul>
+    <form id="messagetext" class="message-form">
+      <div class="message-input">
+        <input id="user-message" type="text" name="messageContent" placeholder="Enter your message" />
+        <input type="hidden" name="receiver" value="<%=friend.id%>">
+        <input class="btn btn-primary"  type="submit" value="Send" />
+      </div>
+      <div class="file-input">
+        <input id="file-picker" type="file" name="messageFile" />
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const friendId = '<%=friend.id%>';
+    let token;
+    document.cookie.split(';').forEach(e => {
+      let str = e.trim()
+      let split = str.split('=')
+      if (split[0] == 'token') {
+        token = split[1];
+      }
+    })
+
+    const socket = io("/chats/users", {
+      query: {
+        token: token
+      }
+    });
+
+    socket.on("private_message", (msg) => {
+  if (msg.from == friendId) {
+    const li = document.createElement('li');
+    li.innerText = `Friend: ${msg.content}`;
+    document.querySelector("#messages").appendChild(li);
+    if (msg.fileUrl) {
+      const link = document.createElement('a');
+      link.href = '/fileUpload/privateFiles/' + msg.fileUrl;
+      link.innerText = `Download File - ${msg.fileUrl}`;
+      li.appendChild(link);
+      console.log(msg.fileUrl);
+    }
+  }
+});
+
+document.querySelector("#messagetext").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const message = document.getElementById('user-message').value.trim();
+  const picker = document.getElementById('file-picker');
+
+  const formData = new FormData();
+  formData.append('messageContent', message);
+  formData.append('receiver', '<%=friend.id%>');
+  if (picker.files.length > 0)
+    formData.append('messageFile', picker.files[0], picker.files[0].name);
+
+  if (message.length > 0) {
+    fetch('/chats/send-to-user/<%=friend.id%>', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('user-message').value = '';
+        const li = document.createElement('li');
+        li.innerText = `Me: ${message}`;
+        document.querySelector('#messages').appendChild(li);
+        if (picker.files.length > 0) {
+          console.log('Included file')
+          const link = document.createElement('a');
+          link.href = '/fileUpload/privateFiles/' + data.fileUrl;
+          link.innerText = `Download File - ${data.fileUrl}`;
+          li.appendChild(link)
+        }
+      });
+  }
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const messagesContainer = document.getElementById("messages");
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+});
+
+
+  </script>
+  <%- include('includes/end.ejs') %>
